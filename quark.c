@@ -78,13 +78,22 @@ static int quark_parse_value(quark_context *context, quark_node *node) {
 }
 
 int quark_parse(quark_node *node, const char *json) {
+    int rtn;
     quark_context context;
 
     context.json = json;
     node->type = QUARK_NULL;
 
     quark_parse_whitespace(&context);
-    return quark_parse_value(&context, node);
+    if ((rtn = quark_parse_value(&context, node)) == QUARK_PARSE_OK) {
+        quark_parse_whitespace(&context);
+
+        if (*context.json != '\0') {
+            rtn = QUARK_PARSE_ROOT_NODE_SINGULAR;
+        }
+    }
+
+    return rtn;
 }
 
 quark_type quark_get_type(const quark_node *node) {
