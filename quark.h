@@ -22,6 +22,10 @@ typedef struct {
     quark_type type;
 } quark_node;
 
+typedef struct {
+    const char *json;
+} quark_context;
+
 int quark_parse(quark_node *, const char *);
 quark_type quark_get_type(const quark_node *);
 #endif
