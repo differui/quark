@@ -1,14 +1,14 @@
 ## Questions
 
-** mac 的几个 Clang compiler 有什么区别?**
+> mac 的几个 C compiler 有什么区别？
 
 ```bash
-$which cc # => /usr/bin/cc
-$which gcc # => /usr/bin/gcc
+$which cc    # => /usr/bin/cc
+$which gcc   # => /usr/bin/gcc
 $which clang # => /usr/bin/clang
 ```
 
-**以 `const` 声明的指针为什么可以赋值？**
+> 以 `const` 声明的指针为什么可以赋值？
 
 ```c
 int main() {
@@ -35,10 +35,12 @@ int *(const a)       // a 不可变 *a 可变
 const int *(const a) // a 不可变 *a 不可变
 ```
 
-**C89 C99?**
+> C的版本怎么那多 C89 C99？
 
 1. K&R C
 2. C89(ANSI C)
 3. C90(IOS C)
 4. C95,C96
 5. C99
+
+> 不同的数据类型如何进行初始化？
