@@ -1,6 +1,8 @@
 #include <stdio.h>
 #include <assert.h>
 #include <stdlib.h>
+#include <math.h>
+#include <errno.h>
 #include "quark.h"
 
 #define EXPECT(c, ch)\
@@ -83,11 +85,14 @@ static int quark_parse_number(quark_context *context, quark_node *node) {
         last_c = c;
     }
 
+    errno = 0;
     node->number = strtod(context->json, &end);
-    if (context->json == end)
-        return QUARK_PARSE_INVALID_VALUE;
-    context->json = end;
+
+    if (errno == ERANGE && (node->number == HUGE_VAL || node->number == -HUGE_VAL))
+        return QUARK_PARSE_NUMBER_TOO_BIG;
+
     node->type = QUARK_NUMBER;
+    context->json = end;
     return QUARK_PARSE_OK;
 }
 
