@@ -1,12 +1,18 @@
 #include <stdio.h>
+#include <assert.h>
 #include "quark.h"
+
+#define EXPECT(c, ch)\
+    do {\
+        assert(*c->json == (ch)); c->json++;\
+    } while(0)
 
 typedef struct {
     const char *json;
 } quark_context;
 
 static int quark_parse_true(quark_context *context, quark_node *node) {
-    context->json++;
+    EXPECT(context, 't');
 
     if (
         context->json[0] != 'r' ||
@@ -15,14 +21,14 @@ static int quark_parse_true(quark_context *context, quark_node *node) {
         return QUARK_PARSE_INVALID_VALUE;
     }
 
-    context->json += 4;
+    context->json += 3;
     node->type = QUARK_TRUE;
 
     return QUARK_PARSE_OK;
 }
 
 static int quark_parse_false(quark_context *context, quark_node *node) {
-    context->json++;
+    EXPECT(context, 'f');
 
     if (
         context->json[0] != 'a' ||
@@ -39,7 +45,7 @@ static int quark_parse_false(quark_context *context, quark_node *node) {
 }
 
 static int quark_parse_null(quark_context *context, quark_node *node) {
-    context->json++;
+    EXPECT(context, 'n');
 
     if (context->json[0] != 'u' || context->json[1] != 'l' || context->json[2] != 'l') {
         return QUARK_PARSE_INVALID_VALUE;
