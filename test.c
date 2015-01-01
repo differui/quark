@@ -44,10 +44,53 @@ static void test_parse_false() {
     EXPECT_EQ_INT(QUARK_FALSE, quark_get_type(&node));
 }
 
+static void test_parse_expect_value() {
+    quark_node node;
+
+    node.type = QUARK_FALSE;
+    EXPECT_EQ_INT(QUARK_PARSE_EXPECT_VALUE, quark_parse(&node, ""));
+    EXPECT_EQ_INT(QUARK_NULL, quark_get_type(&node));
+
+    node.type = QUARK_FALSE;
+    EXPECT_EQ_INT(QUARK_PARSE_EXPECT_VALUE, quark_parse(&node, " "));
+    EXPECT_EQ_INT(QUARK_NULL, quark_get_type(&node));
+}
+
+static void test_parse_invalid_value() {
+    quark_node node;
+
+    node.type = QUARK_FALSE;
+    EXPECT_EQ_INT(QUARK_PARSE_INVALID_VALUE, quark_parse(&node, "nul"));
+    EXPECT_EQ_INT(QUARK_NULL, quark_get_type(&node));
+
+    node.type = QUARK_FALSE;
+    EXPECT_EQ_INT(QUARK_PARSE_INVALID_VALUE, quark_parse(&node, "fal"));
+    EXPECT_EQ_INT(QUARK_NULL, quark_get_type(&node));
+
+    node.type = QUARK_FALSE;
+    EXPECT_EQ_INT(QUARK_PARSE_INVALID_VALUE, quark_parse(&node, "tru"));
+    EXPECT_EQ_INT(QUARK_NULL, quark_get_type(&node));
+
+    node.type = QUARK_FALSE;
+    EXPECT_EQ_INT(QUARK_PARSE_INVALID_VALUE, quark_parse(&node, "?"));
+    EXPECT_EQ_INT(QUARK_NULL, quark_get_type(&node));
+}
+
+static void test_parse_root_not_single() {
+    quark_node node;
+
+    node.type = QUARK_FALSE;
+    EXPECT_EQ_INT(QUARK_PARSE_ROOT_NODE_SINGULAR, quark_parse(&node, "null a"));
+    EXPECT_EQ_INT(QUARK_NULL, quark_get_type(&node));
+}
+
 static void test_parse() {
     test_parse_null();
     test_parse_true();
     test_parse_false();
+    test_parse_expect_value();
+    test_parse_invalid_value();
+    test_parse_root_not_single();
 }
 
 int main() {
