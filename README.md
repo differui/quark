@@ -34,3 +34,11 @@ int const *a         // a 可变 *a 不可变
 int *(const a)       // a 不可变 *a 可变
 const int *(const a) // a 不可变 *a 不可变
 ```
+
+**C89 C99?**
+
+1. K&R C
+2. C89(ANSI C)
+3. C90(IOS C)
+4. C95,C96
+5. C99
