@@ -116,12 +116,7 @@ static void test_parse_root_not_single() {
     quark_node node;
 
     TEST_ERROR(QUARK_PARSE_ROOT_NODE_SINGULAR, "null a");
-
-    #if 0
-    TEST_ERROR(QUARK_PARSE_ROOT_NODE_SINGULAR, "0123");
-    TEST_ERROR(QUARK_PARSE_ROOT_NODE_SINGULAR, "0x0");
-    TEST_ERROR(QUARK_PARSE_ROOT_NODE_SINGULAR, "0x123");
-    #endif
+    TEST_ERROR(QUARK_PARSE_ROOT_NODE_SINGULAR, "123 123");
 }
 
 static void test_parse_number_too_big() {
