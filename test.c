@@ -28,8 +28,26 @@ static void test_parse_null() {
     EXPECT_EQ_INT(QUARK_NULL, quark_get_type(&node));
 }
 
+static void test_parse_true() {
+    quark_node node;
+    node.type = QUARK_NULL;
+
+    EXPECT_EQ_INT(QUARK_PARSE_OK, quark_parse(&node, "true"));
+    EXPECT_EQ_INT(QUARK_TRUE, quark_get_type(&node));
+}
+
+static void test_parse_false() {
+    quark_node node;
+    node.type = QUARK_NULL;
+
+    EXPECT_EQ_INT(QUARK_PARSE_OK, quark_parse(&node, "false"));
+    EXPECT_EQ_INT(QUARK_FALSE, quark_get_type(&node));
+}
+
 static void test_parse() {
     test_parse_null();
+    test_parse_true();
+    test_parse_false();
 }
 
 int main() {
